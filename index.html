@@ -179,9 +179,111 @@
         hr { border: 1px solid #9C27B0; margin: 2rem 0; }
         /* رموز خاصة */
         .symbol { font-weight: bold; font-size: 1.2rem; }
+
+        /* زر الطباعة */
+        .print-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #9C27B0;
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(156,39,176,0.4);
+            z-index: 1000;
+            transition: transform 0.2s, background 0.2s;
+            border: 2px solid white;
+        }
+        .print-button:hover {
+            background: #7B1FA2;
+            transform: scale(1.05);
+        }
+
+        /* أنماط الطباعة - تظهر فقط عند الطباعة */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                padding: 0.5in;
+                font-size: 12pt;
+                max-width: 100%;
+            }
+            .print-button {
+                display: none; /* إخفاء زر الطباعة عند الطباعة */
+            }
+            h1, h2, h3, h4 {
+                color: black;
+                border-bottom-color: #666;
+                page-break-after: avoid;
+            }
+            h1 { font-size: 24pt; }
+            h2 { font-size: 20pt; }
+            h3 { font-size: 16pt; }
+            p { orphans: 3; widows: 3; }
+            table {
+                box-shadow: none;
+                background: white;
+                border: 1px solid #333;
+                page-break-inside: avoid;
+            }
+            th {
+                background: #ccc;
+                color: black;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .mermaid {
+                background: white;
+                box-shadow: none;
+                border: 1px solid #aaa;
+                page-break-inside: avoid;
+            }
+            .math, .boxed-equation, .note-box, .example, .footer {
+                background: white !important;
+                color: black !important;
+                border: 1px solid #333 !important;
+                box-shadow: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .note-box { border-right: 4px solid #FFB74D; }
+            .example { border-right: 4px solid #4ECDC4; }
+            .footer { background: #1e2b3a; color: white; } /* احتفاظ باللون الداكن للطباعة */
+            .page-break {
+                background: none;
+                margin: 0;
+                height: 0;
+            }
+            /* تجنب قطع الرسوميات والجداول */
+            tr, td, th, .mermaid, .math, .boxed-equation, img, svg {
+                page-break-inside: avoid;
+            }
+            a {
+                color: black;
+                text-decoration: none;
+            }
+            a[href]::after {
+                content: " (" attr(href) ")";
+                font-size: 10pt;
+                font-style: italic;
+            }
+        }
+
+        /* تأكد من أن الرسوم البيانية لا تتعطل */
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
+
+<!-- زر الطباعة / PDF -->
+<button class="print-button" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
 
 <!-- ========================= النص الكامل ========================= -->
 <!-- صفحة العنوان -->
