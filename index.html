@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Amiri:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- MathJax الإصدار 3 مع تهيئة لعرض المعادلات بشكل صحيح (LTR) -->
+    <!-- Mermaid للرسوم البيانية -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <!-- MathJax الإصدار 3 - مع تهيئة محسّنة للتحميل والعرض -->
     <script>
         window.MathJax = {
             tex: {
@@ -21,15 +23,20 @@
                 ignoreHtmlClass: 'tex2jax_ignore',
                 processHtmlClass: 'tex2jax_process',
                 renderActions: {
-                    addMenu: [0, '', '']
+                    addMenu: [0, '', '']  // تعطيل قائمة السياق
                 }
             },
-            loader: {load: ['[tex]/ams', '[tex]/noerrors']}
+            loader: {load: ['[tex]/ams', '[tex]/noerrors']},
+            startup: {
+                pageReady: () => {
+                    // تأخير بسيط لضمان تحميل كل المحتوى
+                    return MathJax.startup.defaultPageReady();
+                }
+            }
         };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
-    <!-- Mermaid للرسوم البيانية -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <!-- تحميل MathJax بشكل متزامن (بدون async) لضمان تنفيذه بعد تهيئة الصفحة -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
     <style>
         * {
             margin: 0;
@@ -68,7 +75,7 @@
             border-radius: 16px;
             overflow: hidden;
             background: white;
-            direction: ltr; /* الجداول قد تحتوي على أرقام ومعادلات فتكون LRT */
+            direction: ltr; /* الجداول قد تحتوي على أرقام ومعادلات فتكون LTR */
         }
         th {
             background: #9C27B0;
